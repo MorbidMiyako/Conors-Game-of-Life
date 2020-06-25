@@ -327,23 +327,6 @@ const CheckTilesAroundTile = (gameBoard, i, j) => {
 
 }
 
-const NextStep = () => {
-  let returnedArray = RedrawGameBoard(gameBoard, trueTiles)
-  Object.values(trueTiles).forEach(array => {
-    document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
-    document.getElementById(`F${array[0]},${array[1]}`).classList.toggle("hidden")
-  })
-  gameBoard = returnedArray[0]
-  trueTiles = returnedArray[1]
-  generationCount += 1
-  document.getElementById("generationCount").textContent = `Current generation: ${generationCount}`
-
-  Object.values(trueTiles).forEach(array => {
-    document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
-    document.getElementById(`F${array[0]},${array[1]}`).classList.toggle("hidden")
-  })
-}
-
 const RandomiseGameBoard = (gameBoard) => {
   let newGameBoard = CreateGameBoard(gameBoard.length, gameBoard[0].length)
   let newTrueTiles = {}
@@ -360,6 +343,42 @@ const RandomiseGameBoard = (gameBoard) => {
   return [newGameBoard, newTrueTiles]
 }
 
+const LoadTemplateBoard = (newGameBoard) => {
+  let newTrueTiles = {}
+  newGameBoard.forEach((gameRow, i) => {
+    gameRow.forEach((gameTile, j) => {
+      if (gameTile) {
+        newTrueTiles[`${i}, ${j}`] = [i, j]
+      }
+    })
+  })
+  gameBoard = newGameBoard
+  trueTiles = newTrueTiles
+  console.log(trueTiles)
+  Object.values(trueTiles).forEach(array => {
+    document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
+    document.getElementById(`F${array[0]},${array[1]}`).classList.toggle("hidden")
+  })
+}
+
+const NextStep = () => {
+  console.log(gameBoard)
+  let returnedArray = RedrawGameBoard(gameBoard, trueTiles)
+  Object.values(trueTiles).forEach(array => {
+    document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
+    document.getElementById(`F${array[0]},${array[1]}`).classList.toggle("hidden")
+  })
+  gameBoard = returnedArray[0]
+  trueTiles = returnedArray[1]
+  generationCount += 1
+  document.getElementById("generationCount").textContent = `Current generation: ${generationCount}`
+
+  Object.values(trueTiles).forEach(array => {
+    document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
+    document.getElementById(`F${array[0]},${array[1]}`).classList.toggle("hidden")
+  })
+}
+
 // creates object to store only the tiles which are true, this prevents looping over entire matrix
 // an object has lower look up times, thus deletion is faster
 let trueTiles = {
@@ -367,6 +386,59 @@ let trueTiles = {
 }
 
 let gameBoard = CreateGameBoard(50, 50)
+
+let quasarTemplate = [
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false],
+  [false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false],
+  [false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false],
+  [false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false],
+  [false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false],
+  [false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false],
+  [false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false],
+  [false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false],
+  [false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, false, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, true, false, false, false, false, true, false, false, false, true, false, false, false, false, true, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, true, false, true, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+]
 
 let generationCount = 0
 
@@ -476,7 +548,6 @@ function pageCreate() {
     startButton.addEventListener('click', () => {
       if (!isPlaying) {
         play = setInterval(() => {
-          console.log("hey")
           NextStep()
         }, speed)
       }
@@ -663,12 +734,16 @@ function pageCreate() {
   }
 
   function templatesDivCreate() {
-    const templatesDiv = document.createElement('form')
+    const templatesDiv = document.createElement('div')
     const spaceShipTemplate = document.createElement('button')
 
     templatesDiv.appendChild(spaceShipTemplate)
 
-    spaceShipTemplate.textContent = "Spaceship"
+    spaceShipTemplate.textContent = "Quasar"
+
+    spaceShipTemplate.addEventListener("click", () => {
+      LoadTemplateBoard(quasarTemplate)
+    })
 
     return templatesDiv
   }

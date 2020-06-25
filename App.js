@@ -1,24 +1,27 @@
 // appends all the components creating the game component 
 function pageCreate() {
   const generalDiv = document.createElement('div')
+  const controlsDiv = document.createElement('div')
 
   generalDiv.setAttribute("id", "generalDiv")
+  controlsDiv.setAttribute("id", "controlsDiv")
 
   //creates the tiles/gameBoard div
   generalDiv.appendChild(gameBoardDivCreate())
 
   // creates the generationCount div 
-  generalDiv.appendChild(generationDivCreate())
+  controlsDiv.appendChild(generationDivCreate())
 
   // creates the buttons div 
-  generalDiv.appendChild(buttonsDivCreate())
+  controlsDiv.appendChild(buttonsDivCreate())
 
   // creates the settings div 
-  generalDiv.appendChild(settingsDivCreate())
+  controlsDiv.appendChild(settingsDivCreate())
 
   // creates the templates div
-  generalDiv.appendChild(templatesDivCreate())
+  controlsDiv.appendChild(templatesDivCreate())
 
+  generalDiv.appendChild(controlsDiv)
 
   return generalDiv
 }

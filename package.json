@@ -1,0 +1,21 @@
+{
+  "name": "Conors-Game-of-Life",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MorbidMiyako/Conors-Game-of-Life.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MorbidMiyako/Conors-Game-of-Life/issues"
+  },
+  "homepage": "https://github.com/MorbidMiyako/Conors-Game-of-Life#readme"
+}

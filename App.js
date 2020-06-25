@@ -1,4 +1,3 @@
-
 // creates matrix of desired size
 const CreateGameBoard = (height, width) => {
   let matrice = []
@@ -327,6 +326,7 @@ const CheckTilesAroundTile = (gameBoard, i, j) => {
 
 }
 
+// creates new gameboard with the same dimension and randomises their tiles to true or false
 const RandomiseGameBoard = (gameBoard) => {
   let newGameBoard = CreateGameBoard(gameBoard.length, gameBoard[0].length)
   let newTrueTiles = {}
@@ -343,6 +343,7 @@ const RandomiseGameBoard = (gameBoard) => {
   return [newGameBoard, newTrueTiles]
 }
 
+// uses template to create a new gameboard
 const LoadTemplateBoard = (newGameBoard) => {
   let newTrueTiles = {}
   newGameBoard.forEach((gameRow, i) => {
@@ -360,6 +361,7 @@ const LoadTemplateBoard = (newGameBoard) => {
   })
 }
 
+// changes the hidden classes on the tiles which changed, firs it "resets" the board, then it sets hidden for the now alive cells
 const NextStep = () => {
   let returnedArray = RedrawGameBoard(gameBoard, trueTiles)
   Object.values(trueTiles).forEach(array => {
@@ -383,8 +385,10 @@ let trueTiles = {
 
 }
 
+// creates initial gameBoard
 let gameBoard = CreateGameBoard(50, 50)
 
+// houses the quasarTemplate
 let quasarTemplate = [
   [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -438,27 +442,34 @@ let quasarTemplate = [
   [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 ]
 
+// keeps count of the generation
 let generationCount = 0
 
+// houses the callback function to allow the setInterval function to stop
 let play = false
+// checks if the game is running, to starting a second setInterval, overriding the play variable keepint the stop button from working properly
 let isPlaying = false
 
+//keeps track of the speed
 let speed = 100
 
+//stores the colour settings
 let bgcolour = undefined
 let fgcolour = undefined
-// creates gameBoard, this needs to be changed to allow user to input the gameBoard size
 
+// appends all the components creating the game component 
 function pageCreate() {
   const generalDiv = document.createElement('div')
 
   generalDiv.setAttribute("id", "generalDiv")
 
+  //creates the tiles/gameBoard div
   function gameBoardDivCreate() {
     const gameBoardDiv = document.createElement('div')
 
     gameBoardDiv.setAttribute("id", "gameBoardDiv")
 
+    //creates each tile, giving the live tiles a hidden class and an onclick that toggles the class
     gameBoard.forEach((array, i) => {
       const gameRow = document.createElement('div')
 
@@ -507,6 +518,7 @@ function pageCreate() {
     return gameBoardDiv
   }
 
+  // creates the generationCount div 
   function generationDivCreate() {
     const generationText = document.createElement('p')
 
@@ -517,6 +529,7 @@ function pageCreate() {
     return generationText
   }
 
+  // creates the buttons div 
   function buttonsDivCreate() {
     const buttonsDiv = document.createElement('div')
 
@@ -539,10 +552,12 @@ function pageCreate() {
     eraseButton.textContent = 'Erase'
     randomButton.textContent = 'Random Board'
 
+    // runs the NextStep function
     nextStepButton.addEventListener('click', () => {
       NextStep()
     })
 
+    // creates setInterval function for NextStep and sets returned value to play
     startButton.addEventListener('click', () => {
       if (!isPlaying) {
         play = setInterval(() => {
@@ -553,11 +568,14 @@ function pageCreate() {
       isPlaying = true
     })
 
+    // calls the stop function that was set to play in the previous button
     stopButton.addEventListener('click', () => {
       clearInterval(play)
       isPlaying = false
     })
 
+    // reloads the gameBoard with empty tiles and reapplies colour settings.
+    // speed settings are inside the start button, and thus dont need to be reapplied
     eraseButton.addEventListener('click', () => {
       gameBoard = CreateGameBoard(gameBoard.length, gameBoard[0].length)
       // needs to be set to -1 since NextStep updates the textContent after generationCount +=1
@@ -584,6 +602,7 @@ function pageCreate() {
 
     })
 
+    // calls the RandomiseGameBoard function and sets new trueTiles and gameBoard value
     randomButton.addEventListener('click', () => {
       let returnArray = RandomiseGameBoard(gameBoard)
       gameBoard = returnArray[0]
@@ -595,6 +614,7 @@ function pageCreate() {
     return buttonsDiv
   }
 
+  // creates the settings div 
   function settingsDivCreate() {
     const settingsDiv = document.createElement('form')
     const settingBackgroundColourLabel = document.createElement('label')
@@ -672,6 +692,7 @@ function pageCreate() {
 
       dimensions = dimensions.split(",")
 
+      // checks if input is correct before creating a new gameBoard
       if (!isNaN(dimensions[0]) && !isNaN(dimensions[1])) {
 
         gameBoard = CreateGameBoard(dimensions[0], dimensions[1])
@@ -681,10 +702,8 @@ function pageCreate() {
         generalDiv.insertBefore(gameBoardDivCreate(), document.getElementById("generalDiv").childNodes[0])
       }
 
-      console.log(newSpeed)
-      console.log(Number(newSpeed))
+      // checks if a number is inputed and sets new speed variable and reloads buttons to create new evenListener
       if (!isNaN(Number(newSpeed)) && newSpeed !== 0) {
-        console.log("ran speed function")
         speed = newSpeed * 1000
 
         generalDiv.removeChild(document.getElementById("buttonsDiv"))
@@ -692,6 +711,7 @@ function pageCreate() {
         generalDiv.insertBefore(buttonsDivCreate(), document.getElementById("generalDiv").childNodes[2])
       }
 
+      // checks if input has been left empty, if not then it applies the new colour, otherwise it applies the old one
       if (newbgcolour !== "") {
 
         bgcolour = newbgcolour
@@ -703,8 +723,8 @@ function pageCreate() {
         })
       }
 
+      // if no new colour has been specified, it applies previous colour in case size of the board has changed
       else {
-
         let backgroundElements = document.querySelectorAll(".falseTile")
 
         backgroundElements.forEach(elementToChange => {
@@ -725,7 +745,6 @@ function pageCreate() {
       }
 
       else {
-
         fgcolour = newfgcolour
 
         let foregroundElements = document.querySelectorAll(".trueTile")
@@ -744,6 +763,7 @@ function pageCreate() {
     return settingsDiv
   }
 
+  // creates the templates div
   function templatesDivCreate() {
     const templatesDiv = document.createElement('div')
     const spaceShipTemplate = document.createElement('button')
@@ -752,6 +772,7 @@ function pageCreate() {
 
     spaceShipTemplate.textContent = "Quasar"
 
+    //when clicked it will reload the gameboard to ensure correct size and reapply colour settings
     spaceShipTemplate.addEventListener("click", () => {
       gameBoard = quasarTemplate
 
@@ -791,5 +812,5 @@ function pageCreate() {
   return generalDiv
 }
 
-const upperGameBoardDiv = document.querySelector(".gameBoard")
+const upperGameBoardDiv = document.querySelector(".gameOfLife")
 upperGameBoardDiv.appendChild(pageCreate())

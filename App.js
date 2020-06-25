@@ -354,7 +354,6 @@ const LoadTemplateBoard = (newGameBoard) => {
   })
   gameBoard = newGameBoard
   trueTiles = newTrueTiles
-  console.log(trueTiles)
   Object.values(trueTiles).forEach(array => {
     document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
     document.getElementById(`F${array[0]},${array[1]}`).classList.toggle("hidden")
@@ -362,7 +361,6 @@ const LoadTemplateBoard = (newGameBoard) => {
 }
 
 const NextStep = () => {
-  console.log(gameBoard)
   let returnedArray = RedrawGameBoard(gameBoard, trueTiles)
   Object.values(trueTiles).forEach(array => {
     document.getElementById(`T${array[0]},${array[1]}`).classList.toggle("hidden")
@@ -551,6 +549,7 @@ function pageCreate() {
           NextStep()
         }, speed)
       }
+      console.log(speed)
       isPlaying = true
     })
 
@@ -567,6 +566,19 @@ function pageCreate() {
       generalDiv.removeChild(document.getElementById("gameBoardDiv"))
 
       generalDiv.insertBefore(gameBoardDivCreate(), document.getElementById("generalDiv").childNodes[0])
+
+      let backgroundElements = document.querySelectorAll(".falseTile")
+
+      backgroundElements.forEach(elementToChange => {
+        elementToChange.style.backgroundColor = bgcolour
+      })
+
+      let foregroundElements = document.querySelectorAll(".trueTile")
+
+      foregroundElements.forEach(elementToChange => {
+        elementToChange.style.backgroundColor = fgcolour
+      })
+
       generationCount = -1
       NextStep()
 
@@ -667,11 +679,12 @@ function pageCreate() {
         generalDiv.removeChild(document.getElementById("gameBoardDiv"))
 
         generalDiv.insertBefore(gameBoardDivCreate(), document.getElementById("generalDiv").childNodes[0])
-
-        console.log(gameBoard)
       }
 
-      if (!isNaN(newSpeed) && newSpeed === 0) {
+      console.log(newSpeed)
+      console.log(Number(newSpeed))
+      if (!isNaN(Number(newSpeed)) && newSpeed !== 0) {
+        console.log("ran speed function")
         speed = newSpeed * 1000
 
         generalDiv.removeChild(document.getElementById("buttonsDiv"))
@@ -686,7 +699,6 @@ function pageCreate() {
         let backgroundElements = document.querySelectorAll(".falseTile")
 
         backgroundElements.forEach(elementToChange => {
-          console.log(elementToChange)
           elementToChange.style.backgroundColor = bgcolour
         })
       }
@@ -701,7 +713,6 @@ function pageCreate() {
       }
 
       if (newfgcolour !== "") {
-        console.log("ran if statement")
 
         fgcolour = newfgcolour
 
@@ -742,6 +753,24 @@ function pageCreate() {
     spaceShipTemplate.textContent = "Quasar"
 
     spaceShipTemplate.addEventListener("click", () => {
+      gameBoard = quasarTemplate
+
+      generalDiv.removeChild(document.getElementById("gameBoardDiv"))
+
+      generalDiv.insertBefore(gameBoardDivCreate(), document.getElementById("generalDiv").childNodes[0])
+
+      let backgroundElements = document.querySelectorAll(".falseTile")
+
+      backgroundElements.forEach(elementToChange => {
+        elementToChange.style.backgroundColor = bgcolour
+      })
+
+      let foregroundElements = document.querySelectorAll(".trueTile")
+
+      foregroundElements.forEach(elementToChange => {
+        elementToChange.style.backgroundColor = fgcolour
+      })
+
       LoadTemplateBoard(quasarTemplate)
     })
 

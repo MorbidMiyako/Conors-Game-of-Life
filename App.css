@@ -122,7 +122,8 @@ select:-webkit-autofill:focus {
 }
 
 .textSection {
-  width: 40em;
+  width : 40em;
+  margin: 0 auto
 }
 
 .infoText h2,

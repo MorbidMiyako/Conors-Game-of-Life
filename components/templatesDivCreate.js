@@ -27,6 +27,10 @@ function templatesDivCreate() {
             elementToChange.style.backgroundColor = fgcolour
         })
 
+        generationCount = 0
+
+        document.getElementById("generationCount").textContent = `Current generation: ${generationCount}`
+
         LoadTemplateBoard(quasarTemplate)
     })
 

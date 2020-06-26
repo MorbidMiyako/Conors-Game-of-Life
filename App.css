@@ -43,13 +43,13 @@ body {
 }
 
 .trueTile {
-  padding         : .38em;
+  padding         : .386em;
   border          : 0.065em #306230 solid;
   background-color: #8bac0f;
 }
 
 .falseTile {
-  padding         : .38em;
+  padding         : .386em;
   border          : 0.065em #306230 solid;
   background-color: #0f380f;
 }
@@ -63,7 +63,7 @@ body {
   border    : 0.1em #0f380f solid;
   padding   : 0.5em 0;
   margin    : 0.7em auto;
-  width     : 45em;
+  width     : 44.9em;
 }
 
 #generationCount {

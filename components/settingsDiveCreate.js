@@ -90,9 +90,9 @@ function settingsDivCreate() {
         if (!isNaN(Number(newSpeed)) && newSpeed !== 0) {
             speed = newSpeed * 1000
 
-            generalDiv.removeChild(document.getElementById("buttonsDiv"))
+            controlsDiv.removeChild(document.getElementById("buttonsDiv"))
 
-            generalDiv.insertBefore(buttonsDivCreate(), document.getElementById("generalDiv").childNodes[2])
+            controlsDiv.insertBefore(buttonsDivCreate(), document.getElementById("controlsDiv").childNodes[1])
         }
 
         // checks if input has been left empty, if not then it applies the new colour, otherwise it applies the old one

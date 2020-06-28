@@ -9,6 +9,10 @@ function templatesDivCreate() {
 
     //when clicked it will reload the gameboard to ensure correct size and reapply colour settings
     spaceShipTemplate.addEventListener("click", () => {
+        clearInterval(play)
+
+        isPlaying = false
+
         gameBoard = quasarTemplate
 
         generalDiv.removeChild(document.getElementById("gameBoardDiv"))

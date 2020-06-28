@@ -46,6 +46,8 @@ function buttonsDivCreate() {
     // reloads the gameBoard with empty tiles and reapplies colour settings.
     // speed settings are inside the start button, and thus dont need to be reapplied
     eraseButton.addEventListener('click', () => {
+        clearInterval(play)
+        isPlaying = false
         gameBoard = CreateGameBoard(gameBoard.length, gameBoard[0].length)
         // needs to be set to -1 since NextStep updates the textContent after generationCount +=1
         NextStep()
@@ -73,6 +75,8 @@ function buttonsDivCreate() {
 
     // calls the RandomiseGameBoard function and sets new trueTiles and gameBoard value
     randomButton.addEventListener('click', () => {
+        clearInterval(play)
+        isPlaying = false
         let returnArray = RandomiseGameBoard(gameBoard)
         gameBoard = returnArray[0]
         trueTiles = returnArray[1]

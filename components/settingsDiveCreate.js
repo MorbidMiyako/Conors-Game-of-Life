@@ -84,10 +84,18 @@ function settingsDivCreate() {
             generalDiv.removeChild(document.getElementById("gameBoardDiv"))
 
             generalDiv.insertBefore(gameBoardDivCreate(), document.getElementById("generalDiv").childNodes[0])
+
+            generationCount = 0
+
+            document.getElementById("generationCount").textContent = `Current generation: ${generationCount}`
         }
 
         // checks if a number is inputed and sets new speed variable and reloads buttons to create new evenListener
-        if (!isNaN(Number(newSpeed)) && newSpeed !== 0) {
+        if (!isNaN(Number(newSpeed)) && newSpeed !== 0 && newSpeed !== "") {
+            clearInterval(play)
+
+            isPlaying = false
+
             speed = newSpeed * 1000
 
             controlsDiv.removeChild(document.getElementById("buttonsDiv"))
@@ -129,8 +137,6 @@ function settingsDivCreate() {
         }
 
         else {
-            fgcolour = newfgcolour
-
             let foregroundElements = document.querySelectorAll(".trueTile")
 
             foregroundElements.forEach(elementToChange => {
@@ -141,7 +147,7 @@ function settingsDivCreate() {
 
         document.getElementById("settingsDiv").reset()
 
-        console.log(newbgcolour, newfgcolour, speed, dimensions)
+        // console.log(newbgcolour, "newbgcolour", newfgcolour, "newfgcoulour", speed, "speed", dimensions, "dimensions")
     })
 
     return settingsDiv

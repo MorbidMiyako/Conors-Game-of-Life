@@ -26,6 +26,8 @@ function gameBoardDivCreate() {
             falseTile.setAttribute("id", `F${i},${j}`)
 
             trueTile.addEventListener('click', () => {
+                clearInterval(play)
+                isPlaying = false
                 generationCount = 0
                 gameBoard[i][j] = false
                 delete trueTiles[`${i}${j}`]
@@ -35,6 +37,8 @@ function gameBoardDivCreate() {
             })
 
             falseTile.addEventListener('click', () => {
+                clearInterval(play)
+                isPlaying = false
                 generationCount = 0
                 gameBoard[i][j] = true
                 trueTiles[`${i}${j}`] = [i, j]

@@ -33,7 +33,6 @@ function buttonsDivCreate() {
                 NextStep()
             }, speed)
         }
-        console.log(speed)
         isPlaying = true
     })
 

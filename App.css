@@ -22,7 +22,7 @@ body {
 }
 
 .personalLogo img {
-  max-width: 20%;
+  max-width: 10%;
   height   : auto;
   z-index  : 2;
   position : fixed;
